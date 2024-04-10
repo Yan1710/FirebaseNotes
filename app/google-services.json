@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1036004991767",
+    "project_id": "fir-notes-7bb11",
+    "storage_bucket": "fir-notes-7bb11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036004991767:android:ba6a03fc9d396fb9f38d52",
+        "android_client_info": {
+          "package_name": "com.example.firebasenotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq0eQE0dOMIl_PjdAuvoYxRrIqVf2Ynsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
