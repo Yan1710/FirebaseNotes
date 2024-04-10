@@ -1,5 +1,6 @@
 package com.example.firebasenotes.views.login
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,14 +21,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.firebasenotes.components.Alert
 import com.example.firebasenotes.viewModels.LoginViewModel
 
 @Composable
 fun LoginView(navController: NavController, loginView: LoginViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
         var email by remember { mutableStateOf("") }
@@ -63,6 +67,15 @@ fun LoginView(navController: NavController, loginView: LoginViewModel) {
                 .padding(start = 30.dp, end = 30.dp)
         ) {
             Text(text = "Iniciar Sesion")
+        }
+        if (loginView.showAlert) {
+            Alert(
+                title = "Alerta",
+                message = "Usuario y/o Contraseña incorrecta",
+                confirmText = "Aceptar",
+                onConfirmClick = { loginView.closeAlert() }) {
+
+            }
         }
 
     }
