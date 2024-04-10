@@ -21,9 +21,11 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.firebasenotes.viewModels.LoginViewModel
 
 @Composable
-fun LoginView() {
+fun LoginView(navController: NavController, loginView: LoginViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
