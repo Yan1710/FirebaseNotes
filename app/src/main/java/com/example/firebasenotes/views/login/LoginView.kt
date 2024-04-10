@@ -56,7 +56,9 @@ fun LoginView(navController: NavController, loginView: LoginViewModel) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = { /*TODO*/ }, modifier = Modifier
+            onClick = { loginView.login(email,password){
+                navController.navigate("Home")
+            } }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 30.dp, end = 30.dp)
         ) {

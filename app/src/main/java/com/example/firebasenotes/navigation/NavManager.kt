@@ -14,7 +14,7 @@ fun NavManager(loginVM:LoginViewModel,notesVM:NotesViewModel){
 val navcController = rememberNavController()
     NavHost(navController = navcController, startDestination = "Login"){
         composable("Login"){
-            TabsView(navcController,LoginViewModel)
+            TabsView(navcController,loginVM)
         }
         composable("Home"){
             HomeView()
