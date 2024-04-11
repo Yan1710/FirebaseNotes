@@ -1,6 +1,9 @@
 package com.example.firebasenotes.viewModels
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.firebasenotes.model.NotesState
@@ -24,29 +27,33 @@ class NotesViewModel : ViewModel() {
     private val firestore = Firebase.firestore
 
     private val _notesData = MutableStateFlow<List<NotesState>>(emptyList())
-    val notesData : StateFlow<List<NotesState>> = _notesData
+    val notesData: StateFlow<List<NotesState>> = _notesData
+
+    var state by mutableStateOf(NotesState())
+        private set
 
 
-    fun fetchNotes(){
+    fun fetchNotes() {
         val email = auth.currentUser?.email
-        firestore.collection("Notes").whereEqualTo("emailuser",email.toString()).addSnapshotListener{
-            querySnapshot,error ->
-            if(error != null){
-                return@addSnapshotListener
+        firestore.collection("Notes").whereEqualTo("emailuser", email.toString())
+            .addSnapshotListener { querySnapshot, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+                val documents = mutableListOf<NotesState>()
+                if (querySnapshot != null) {
+                    for (document in querySnapshot) {
+                        val myDocument =
+                            document.toObject(NotesState::class.java).copy(idDoc = document.id)
+                        documents.add(myDocument)
+                    }
+                }
+                _notesData.value = documents
             }
-            val documents = mutableListOf<NotesState>()
-          if(querySnapshot!=null){
-              for (document in querySnapshot){
-                  val myDocument  = document.toObject(NotesState::class.java).copy(idDoc = document.id)
-                  documents.add(myDocument)
-              }
-          }
-            _notesData.value = documents
-        }
     }
 
     fun saveNewNote(title: String, note: String, onSuccess: () -> Unit) {
-       val email = auth.currentUser?.email
+        val email = auth.currentUser?.email
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val newNote = hashMapOf(
@@ -59,11 +66,11 @@ class NotesViewModel : ViewModel() {
                     .addOnSuccessListener {
                         onSuccess()
                     }
-                    .addOnFailureListener{
+                    .addOnFailureListener {
                         Log.d("FALLO", "saveNewNote: al guardar")
                     }
-            }catch (e: Exception) {
-                Log.d("GUARDADO FALLO", "saveNewNote: " +e.message)
+            } catch (e: Exception) {
+                Log.d("GUARDADO FALLO", "saveNewNote: " + e.message)
             }
 
         }
@@ -74,6 +81,18 @@ class NotesViewModel : ViewModel() {
         val res = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return res.format(currentDate)
 
+    }
+
+    fun getNotById(documentId: String) {
+        firestore.collection("Notes").document(documentId).addSnapshotListener { snapshot, _ ->
+            if (snapshot != null) {
+                val note = snapshot.toObject(NotesState::class.java)
+                state = state.copy(
+                    title = note?.title ?: "",
+                    note = note?.note ?: ""
+                )
+            }
+        }
     }
 
     fun sinOut() {
