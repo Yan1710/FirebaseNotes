@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.navigation.NavController
+import com.example.firebasenotes.components.Cardnotes
 import com.example.firebasenotes.viewModels.NotesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +65,9 @@ fun HomeView(navController: NavController, noteVM: NotesViewModel) {
 
             LazyColumn {
                 items(datos) { item ->
-                    Text(text = item.title)
+                    Cardnotes(title = item.title, note = item.note, date = item.date) {
+                        //
+                    }
 
                 }
             }
