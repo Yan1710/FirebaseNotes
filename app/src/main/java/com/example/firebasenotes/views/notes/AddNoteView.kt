@@ -1,5 +1,6 @@
 package com.example.firebasenotes.views.notes
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,7 +42,10 @@ fun AddNoteView(navController: NavController, notesViewModel: NotesViewModel) {
                 }
             },
                 actions = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = { notesViewModel.saveNewNote(title,note){
+                        Toast.makeText(context,"GUARDOOO", Toast.LENGTH_SHORT).show()
+                        navController.popBackStack()
+                    } }) {
                         Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")
                     }
                 }
