@@ -44,7 +44,7 @@ fun Cardnotes(
             }
             Spacer(modifier = Modifier.weight(1f))
 
-            IconButton(onClick = { onClick }) {
+            IconButton(onClick = { onClick.invoke() }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "")
             }
         }
