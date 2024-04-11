@@ -17,7 +17,7 @@ val navcController = rememberNavController()
             TabsView(navcController,loginVM)
         }
         composable("Home"){
-            HomeView()
+            HomeView(navcController,notesVM)
         }
     }
 }
