@@ -32,6 +32,13 @@ class NotesViewModel : ViewModel() {
     var state by mutableStateOf(NotesState())
         private set
 
+    fun onValue(value: String, text: String) {
+        when (text) {
+            "title" -> state = state.copy(title = value)
+            "note" -> state = state.copy(note = value)
+        }
+    }
+
 
     fun fetchNotes() {
         val email = auth.currentUser?.email
@@ -71,6 +78,49 @@ class NotesViewModel : ViewModel() {
                     }
             } catch (e: Exception) {
                 Log.d("GUARDADO FALLO", "saveNewNote: " + e.message)
+            }
+
+        }
+    }
+
+
+    fun editNote(iDoc: String, onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val editNote = hashMapOf(
+                    "title" to state.title,
+                    "note" to state.note,
+
+                    )
+                firestore.collection("Notes").document(iDoc)
+                    .update(editNote as Map<String, Any>)
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener {
+                        Log.d("FALLO", "saveNewNote: al editar")
+                    }
+            } catch (e: Exception) {
+                Log.d("Editar FALLO", "saveNewNote: " + e.message)
+            }
+
+        }
+    }
+
+
+    fun deleteNote(iDoc: String, onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                firestore.collection("Notes").document(iDoc)
+                    .delete()
+                    .addOnSuccessListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener {
+                        Log.d("FALLO", "saveNewNote: al delete")
+                    }
+            } catch (e: Exception) {
+                Log.d("Delete FALLO", "saveNewNote: " + e.message)
             }
 
         }
