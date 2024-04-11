@@ -13,3 +13,5 @@ m
 =app/src/main/java/com/example/firebasenotes/ui/theme/Color.kt,a\c\ac946b4c84b495ae4be8563911ff42c4decaef80
 w
 Gapp/src/main/java/com/example/firebasenotes/views/login/RegisterView.kt,7\d\7d02a10b362d2e1eb8c2891814b2835e39b448c3
+t
+Dapp/src/main/java/com/example/firebasenotes/views/login/TabsViews.kt,1\7\17c4f1f6859ba3979fa0a0a5c46326ed9e142470
